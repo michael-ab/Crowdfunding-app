@@ -89,6 +89,26 @@ const Form = ({
                                 <MenuItem value="Lymo">Lymo</MenuItem>
                                 <MenuItem value="Upstone">Upstone</MenuItem>
                             </Select>
+                            <FormControl>
+                        <FormHelperText
+                            sx={{
+                                fontWeight: 500,
+                                margin: "10px 0",
+                                fontSize: 16,
+                                color: "#11142d",
+                            }}
+                        >
+                            Rendement (en %)
+                        </FormHelperText>
+                        <TextField
+                            fullWidth
+                            required
+                            id="outlined-basic"
+                            color="info"
+                            variant="outlined"
+                            {...register("yearYield", { required: true })}
+                        />
+                    </FormControl>
                     </FormControl>
                     <Stack direction="row" gap={4}>
                         <FormControl sx={{ flex: 1 }}>
@@ -173,7 +193,7 @@ const Form = ({
                                     color: "#11142d",
                                 }}
                             >
-                                Enter property price
+                                Montant de l'investissement
                             </FormHelperText>
                             <TextField
                                 fullWidth
@@ -185,26 +205,6 @@ const Form = ({
                             />
                         </FormControl>
                     </Stack>
-
-                    <FormControl>
-                        <FormHelperText
-                            sx={{
-                                fontWeight: 500,
-                                margin: "10px 0",
-                                fontSize: 16,
-                                color: "#11142d",
-                            }}
-                        >
-                            Enter Location
-                        </FormHelperText>
-                        <TextField
-                            fullWidth
-                            id="outlined-basic"
-                            color="info"
-                            variant="outlined"
-                            {...register("location", { required: true })}
-                        />
-                    </FormControl>
                     <CustomButton
                         type="submit"
                         title={formLoading ? "Submitting..." : "Submit"}

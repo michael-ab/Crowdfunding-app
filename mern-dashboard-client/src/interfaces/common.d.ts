@@ -22,6 +22,7 @@ export interface PropertyProps {
     title: string;
     startDate: Date;
     endDate: Date;
+    yearYield: Number;
     platform: string;
     description: string;
     location: string;

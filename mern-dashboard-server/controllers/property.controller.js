@@ -71,11 +71,11 @@ const createProperty = async (req, res) => {
             platform,
             startDate,
             endDate,
+            yearYield,
             description,
             propertyType,
             location,
             investedAmount,
-            // photo,
             email,
         } = req.body;
 
@@ -86,18 +86,16 @@ const createProperty = async (req, res) => {
 
         if (!user) throw new Error("User not found");
 
-        //const photoUrl = await cloudinary.uploader.upload(photo);
-
         const newProperty = await Property.create({
             title,
             platform,
             startDate,
             endDate,
+            yearYield,
             description,
             propertyType,
             location,
             investedAmount,
-            // photo: building_icon,
             creator: user._id,
         });
 
@@ -115,7 +113,7 @@ const createProperty = async (req, res) => {
 const updateProperty = async (req, res) => {
     try {
         const { id } = req.params;
-        const { title, platform, description, propertyType, location, investedAmount, startDate,  endDate} =
+        const { title, platform, description, propertyType, investedAmount, startDate,  endDate, yearYield} =
             req.body;
 
 
@@ -127,6 +125,7 @@ const updateProperty = async (req, res) => {
                 platform,
                 startDate,
                 endDate,
+                yearYield,
                 description,
                 propertyType,
                 location,
