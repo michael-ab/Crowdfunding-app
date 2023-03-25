@@ -1,7 +1,7 @@
 import { useList } from "@refinedev/core";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Stack } from "@mui/material";
 
-import { AgentCard } from "./../components";
+import { AgentCard, RadarChart } from "./../components";
 
 const Agents = () => {
     const { data, isLoading, isError } = useList({ resource: "users" });
@@ -16,6 +16,15 @@ const Agents = () => {
             <Typography fontSize={25} fontWeight={700} color="#11142d">
                 Agents List
             </Typography>
+
+            <Stack
+                mt="25px"
+                width="100%"
+                direction={{ xs: "column", lg: "row" }}
+                gap={4}
+            >
+                <RadarChart />
+            </Stack>
 
             <Box
                 mt="20px"

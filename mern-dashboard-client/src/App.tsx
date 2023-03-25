@@ -34,6 +34,7 @@ import {
     Login,
     Home,
     Agents,
+    MyBlog,
     MyProfile,
     PropertyDetails,
     AllProperties,
@@ -151,7 +152,7 @@ function App() {
                         {
                             name: "blog",
                             options: { label: "Blog" },
-                            list: MyProfile,
+                            list: MyBlog,
                             icon: <Newspaper />,
                         },
                         {

@@ -9,19 +9,164 @@ import {
 } from "./../components";
 
 import { buildingIcon } from "../assets";
+import { platform } from "os";
 
 const Home = () => {
 
+    function getSumInvestmentsByPlatform(userInvestments: any) {
+        let totalInvestedAmount: { [platformName: string]: number } = {};
+        for (let i = 0; i < userInvestments.length; i++) {
+            if (userInvestments[i].platform in totalInvestedAmount) {
+                totalInvestedAmount[userInvestments[i].platform] += userInvestments[i].investedAmount;
+            } else {
+                totalInvestedAmount[userInvestments[i].platform] = userInvestments[i].investedAmount;
+            }
+        }
+        console.log(totalInvestedAmount);
+        return totalInvestedAmount;
+    }
+
+    function getTotalYearYield(userInvestments: any) {
+        let totalYearYield = 0;
+        for (let i = 0; i < userInvestments.length; i++) {
+            totalYearYield += userInvestments[i].investedAmount*(0.01)*userInvestments[i].yearYield;
+        }
+        console.log(totalYearYield);
+        return Number(totalYearYield.toFixed(2));
+    }
+
+    function getTotalPercentageYield(userInvestments: any) {
+        let totalYearYield = 0;
+        let totalPercentageYield = 0;
+        for (let i = 0; i < userInvestments.length; i++) {
+            totalYearYield += userInvestments[i].investedAmount;
+        }
+        for (let i = 0; i < userInvestments.length; i++) {
+            totalPercentageYield += userInvestments[i].yearYield*(userInvestments[i].investedAmount/totalYearYield);
+        }
+        console.log(totalPercentageYield);
+        return Number(totalPercentageYield.toFixed(2));
+    }
+
+    function getTotalPercentageYieldByPlatform(userInvestments: any) {
+        let totalYearYield: { [platformName: string]: number } = {};
+        let totalPercentageYield: { [platformName: string]: number } = {};
+        for (let i = 0; i < userInvestments.length; i++) {
+            if (userInvestments[i].platform in totalYearYield) {
+                totalYearYield[userInvestments[i].platform] += userInvestments[i].investedAmount;
+            } else {
+                totalYearYield[userInvestments[i].platform] = userInvestments[i].investedAmount;
+            }
+        }
+        for (let i = 0; i < userInvestments.length; i++) {
+            if (userInvestments[i].platform in totalPercentageYield) {
+                totalPercentageYield[userInvestments[i].platform] +=
+                userInvestments[i].yearYield*(userInvestments[i].investedAmount/totalYearYield[userInvestments[i].platform]);
+                totalPercentageYield[userInvestments[i].platform] = Number(totalPercentageYield[userInvestments[i].platform].toFixed(2));
+
+            } else {
+                totalPercentageYield[userInvestments[i].platform] =
+                userInvestments[i].yearYield*(userInvestments[i].investedAmount/totalYearYield[userInvestments[i].platform]);
+                totalPercentageYield[userInvestments[i].platform] = Number(totalPercentageYield[userInvestments[i].platform].toFixed(2));
+            }
+        }
+        console.log(totalPercentageYield);
+        return totalPercentageYield;
+    }
+
+    function getTotalProjectsByPlatform(userInvestments: any) {
+        let totalProjects: { [platformName: string]: number } = {};
+
+        for (let i = 0; i < userInvestments.length; i++) {
+            if (userInvestments[i].platform in totalProjects) {
+                totalProjects[userInvestments[i].platform] += 1;
+            } else {
+                totalProjects[userInvestments[i].platform] = 1;
+            }
+        }
+        console.log(totalProjects);
+        return totalProjects;
+    }
+
+    function getTotalYearYieldByPlatform(userInvestments: any) {
+        let totalProjects: { [platformName: string]: number } = {};
+
+        for (let i = 0; i < userInvestments.length; i++) {
+            if (userInvestments[i].platform in totalProjects) {
+                totalProjects[userInvestments[i].platform] += userInvestments[i].yearYield*userInvestments[i].investedAmount*(0.01);
+            } else {
+                totalProjects[userInvestments[i].platform] = userInvestments[i].yearYield*userInvestments[i].investedAmount*(0.01);
+            }
+        }
+        console.log(totalProjects);
+        return totalProjects;
+    }
+
+    var dynamicColors = function() {
+        var r = 0;
+        var g = Math.floor(Math.random() * 255);
+        var b = 255;
+        return "rgb(" + r + "," + g + "," + b + ")";
+     };
+
+
+    function getListOfColors(numberColors: number) {
+        let listColors = [];
+        for (let i = 0; i < numberColors; i++) {
+            listColors[i] = dynamicColors();
+        }
+        return listColors;
+    }
+
+    function getColorList(totalByPlatform: any) {
+        let totalByPlatformKeys = Object.keys(totalByPlatform)
+        let listColors = [];
+        for (let i = 0; i < totalByPlatformKeys.length; i++) {
+            switch (totalByPlatformKeys[i]) {
+                case 'Bricks':
+                    listColors[i] = "#ff8c00";
+                    break;
+                case 'RealT':
+                    listColors[i] = "#00008b";
+                    break;
+                case 'LANDE':
+                    listColors[i] = "#00ced1";
+                    break;
+                case 'Clubfunding':
+                    listColors[i] = "#dc143c";
+                    break;
+                case 'Enerfip':
+                    listColors[i] = "#FAD765";
+                    break;
+                case 'Lymo':
+                    listColors[i] = "#696969";
+                    break;
+                case 'Upstone':
+                    listColors[i] = "#6EA0E0";
+                    break;
+                case 'Baltis':
+                    listColors[i] = "#ABF76D";
+                    break;
+                default:
+                    listColors[i] = "#a9a9a9";
+                    break;
+            }
+        }
+        return listColors;
+    }
+
     const { data, isLoading, isError } = useList({
-        resource: "properties",
-        config: {
-            pagination: {
-                pageSize: 10,
-            },
-        },
+        resource: "properties"
     });
 
-    const latestProperties = data?.data ?? [];
+    const userInvestments = data?.data ?? [];
+
+    const totalInvestedAmount = getSumInvestmentsByPlatform(userInvestments);
+    const totalYearYield = getTotalYearYield(userInvestments);
+    const totalPercentageYield = getTotalPercentageYield(userInvestments);
+    const totalPercentageYieldByPlatform = getTotalPercentageYieldByPlatform(userInvestments);
+    const totalYearYieldByPlatform = getTotalYearYieldByPlatform(userInvestments);
+    const totalProjectsByPlatform = getTotalProjectsByPlatform(userInvestments);
 
     if (isLoading) return <Typography>Loading...</Typography>;
     if (isError) return <Typography>Something went wrong!</Typography>;
@@ -34,28 +179,32 @@ const Home = () => {
 
             <Box mt="20px" display="flex" flexWrap="wrap" gap={4}>
                 <PieChart
-                    title="Properties for Sale"
-                    value={684}
-                    series={[75, 25, 30, 50]}
-                    colors={["#275be8", "#c4e8ef"]}
+                    title="Nombre d'investissements en cours"
+                    value={Object.values(totalProjectsByPlatform).reduce((partialSum, a) => partialSum + a, 0).toString()}
+                    series={Object.values(totalProjectsByPlatform)}
+                    labels={Object.keys(totalProjectsByPlatform)}
+                    colors={getColorList(totalProjectsByPlatform)}
                 />
                 <PieChart
-                    title="Properties for Rent"
-                    value={550}
-                    series={[60, 40]}
-                    colors={["#275be8", "#c4e8ef"]}
+                    title="Montant investi en cours"
+                    value={Object.values(totalInvestedAmount).reduce((partialSum, a) => partialSum + a, 0).toString() + " €"}
+                    series={Object.values(totalInvestedAmount)}
+                    labels={Object.keys(totalInvestedAmount)}
+                    colors={getColorList(totalProjectsByPlatform)}
                 />
                 <PieChart
-                    title="Total customers"
-                    value={5684}
-                    series={[75, 25]}
-                    colors={["#275be8", "#c4e8ef"]}
+                    title="Rendement du mois"
+                    value={totalPercentageYield.toString() + "%"}
+                    series={Object.values(totalPercentageYieldByPlatform)}
+                    labels={Object.keys(totalPercentageYieldByPlatform)}
+                    colors={getColorList(totalProjectsByPlatform)}
                 />
                 <PieChart
-                    title="Properties for Cities"
-                    value={555}
-                    series={[75, 25]}
-                    colors={["#275be8", "#c4e8ef"]}
+                    title="Revenus sur l'année"
+                    value={totalYearYield.toString() + " €"}
+                    series={Object.values(totalYearYieldByPlatform)}
+                    labels={Object.keys(totalYearYieldByPlatform)}
+                    colors={getColorList(totalYearYieldByPlatform)}
                 />
             </Box>
 
@@ -66,7 +215,6 @@ const Home = () => {
                 gap={4}
             >
                 <TotalRevenue />
-                <PropertyReferrals />
             </Stack>
 
             <Box
@@ -87,7 +235,7 @@ const Home = () => {
                     mt={2.5}
                     sx={{ display: "flex", flexWrap: "wrap", gap: 4 }}
                 >
-                    {latestProperties.map((property) => (
+                    {userInvestments.map((property) => (
                         <PropertyCard
                             key={property._id}
                             id={property._id}

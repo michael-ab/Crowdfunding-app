@@ -88,6 +88,7 @@ const Form = ({
                                 <MenuItem value="Enerfip">Enerfip</MenuItem>
                                 <MenuItem value="Lymo">Lymo</MenuItem>
                                 <MenuItem value="Upstone">Upstone</MenuItem>
+                                <MenuItem value="Autre">Autre</MenuItem>
                             </Select>
                             <FormControl>
                         <FormHelperText

@@ -3,7 +3,7 @@ import { Box, Typography, Stack } from "@mui/material";
 
 import { PieChartProps } from "./../../interfaces/home";
 
-const PieChart = ({ title, value, series, colors }: PieChartProps) => {
+const PieChart = ({ title, value, series, labels, colors}: PieChartProps) => {
     return (
         <Box
             id="chart"
@@ -38,12 +38,13 @@ const PieChart = ({ title, value, series, colors }: PieChartProps) => {
                 options={{
                     chart: { type: "donut" },
                     colors,
-                    legend: { show: false },
+                    legend: { show: true },
                     dataLabels: { enabled: false },
+                    labels: labels,
                 }}
                 series={series}
                 type="donut"
-                width="120px"
+                width="320px"
             />
         </Box>
     );

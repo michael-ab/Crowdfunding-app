@@ -1,6 +1,7 @@
 export interface PieChartProps {
     title: string;
-    value: number;
+    value: string;
     series: Array<number>;
+    labels: Array<string>;
     colors: Array<string>;
 }
