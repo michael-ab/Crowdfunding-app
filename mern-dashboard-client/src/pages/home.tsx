@@ -177,7 +177,7 @@ const Home = () => {
                 Dashboard
             </Typography>
 
-            <Box mt="20px" display="flex" flexWrap="wrap" gap={4}>
+            <Box mt="20px" display="flex" flexWrap="wrap" gap={2}>
                 <PieChart
                     title="Nombre d'investissements en cours"
                     value={Object.values(totalProjectsByPlatform).reduce((partialSum, a) => partialSum + a, 0).toString()}

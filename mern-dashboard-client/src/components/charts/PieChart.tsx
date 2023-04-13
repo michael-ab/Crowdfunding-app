@@ -44,7 +44,7 @@ const PieChart = ({ title, value, series, labels, colors}: PieChartProps) => {
                 }}
                 series={series}
                 type="donut"
-                width="320px"
+                width="300px"
             />
         </Box>
     );
